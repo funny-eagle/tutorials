@@ -1,5 +1,6 @@
 package com.baeldung.spring.cloud.loadbalancer.client;
 
+import com.baeldung.spring.cloud.loadbalancer.client.config.LoadBalancerConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -46,7 +47,7 @@ class DemoServerInstanceConfiguration {
 }
 
 @Configuration
-@LoadBalancerClient(name = "example-service", configuration = DemoServerInstanceConfiguration.class)
+@LoadBalancerClient(name = "example-service", configuration = LoadBalancerConfiguration.class)
 class WebClientConfig {
     @LoadBalanced
     @Bean
