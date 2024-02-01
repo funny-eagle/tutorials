@@ -11,8 +11,14 @@ import reactor.core.publisher.Mono;
 public class CustomLoadBalancer implements ReactorServiceInstanceLoadBalancer {
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
+        int port;
+        if (request.hashCode() % 2 != 1) {
+            port = 8081;
+        } else {
+            port = 8080;
+        }
         Response<ServiceInstance> response = new DefaultResponse(
-                new DefaultServiceInstance("example-service1","example-service", "localhost", 8080, false));
+                new DefaultServiceInstance("service-provider", "service-provider", "localhost", port, false));
 
         return Mono.just(response);
     }
