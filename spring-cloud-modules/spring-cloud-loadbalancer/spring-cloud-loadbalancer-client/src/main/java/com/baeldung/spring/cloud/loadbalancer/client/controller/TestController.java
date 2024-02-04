@@ -9,15 +9,11 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class TestController {
 
-    private final RestTemplate restTemplate;
-
     @Autowired
-    public TestController(RestTemplate template){
-        this.restTemplate = template;
-    }
+    RestTemplate restTemplate;
 
     @GetMapping(value = "echo/{str}")
     public String echo(@PathVariable String str){
-        return restTemplate.getForObject("http://service-provider/echo/"+str, String.class);
+        return restTemplate.getForObject("http://serviceprovider/echo/"+str, String.class);
     }
 }

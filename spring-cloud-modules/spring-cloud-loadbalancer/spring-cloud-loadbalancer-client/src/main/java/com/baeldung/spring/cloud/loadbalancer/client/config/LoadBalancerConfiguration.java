@@ -1,21 +1,25 @@
 package com.baeldung.spring.cloud.loadbalancer.client.config;
 
-import com.baeldung.spring.cloud.loadbalancer.client.strategy.CustomLoadBalancer;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
+import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.core.env.Environment;
 
-@Configuration
+import javax.annotation.Resource;
+
 public class LoadBalancerConfiguration {
+
+    @Resource
+    NacosDiscoveryProperties nacosDiscoveryProperties;
+
     @Bean
-    public CustomLoadBalancer customLoadBalancer(){
-        return new CustomLoadBalancer();
+    public NacosLoadBalancer nacosLoadBalancer(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory){
+        String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        System.out.println("创建 NacosLoadBalancer， serviceId="+serviceId);
+        return new NacosLoadBalancer(loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId, nacosDiscoveryProperties);
     }
 
-    @LoadBalanced
-    @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
+
 }

@@ -30,8 +30,8 @@
     </dependencies>
 
     <properties>
-        <spring-boot.version>2.6.1</spring-boot.version>
-        <spring-cloud.version>2021.0.0</spring-cloud.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
+        <spring-cloud.version>2021.0.9</spring-cloud.version>
     </properties>
 
 </project>
